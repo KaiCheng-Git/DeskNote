@@ -1,0 +1,87 @@
+/* ===== Global Reset & Base ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-primary: rgba(18, 18, 28, 0.82);
+  --bg-secondary: rgba(28, 28, 42, 0.75);
+  --bg-hover: rgba(255, 255, 255, 0.06);
+  --bg-active: rgba(255, 255, 255, 0.1);
+  --border: rgba(255, 255, 255, 0.08);
+  --accent: #e94560;
+  --accent-dim: rgba(233, 69, 96, 0.25);
+  --text-primary: rgba(255, 255, 255, 0.92);
+  --text-secondary: rgba(255, 255, 255, 0.5);
+  --text-muted: rgba(255, 255, 255, 0.3);
+  --sidebar-width: 44px;
+  --titlebar-height: 32px;
+  --radius: 8px;
+  --font: -apple-system, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  overflow: hidden;
+  font-family: var(--font);
+  font-size: 13px;
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+#app {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* ===== Utility ===== */
+.text-secondary { color: var(--text-secondary); }
+.text-muted { color: var(--text-muted); }
+.accent { color: var(--accent); }
+
+input, textarea {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-family: var(--font);
+  font-size: 13px;
+  resize: none;
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--text-muted);
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-family: var(--font);
+  font-size: 13px;
+  transition: color 0.15s, background 0.15s;
+}
+
+button:hover {
+  color: var(--text-primary);
+}

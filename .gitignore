@@ -1,0 +1,23 @@
+# Node
+node_modules/
+dist/
+.svelte-kit/
+
+# Rust / Tauri
+src-tauri/target/
+src-tauri/gen/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/settings.json
+.idea/
+*.swp
+*.swo

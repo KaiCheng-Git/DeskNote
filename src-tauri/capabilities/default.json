@@ -1,0 +1,13 @@
+{
+  "identifier": "default",
+  "description": "Default capabilities for DeskNote",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "dialog:default",
+    "fs:default",
+    "sql:default",
+    "store:default",
+    "window-state:default"
+  ]
+}

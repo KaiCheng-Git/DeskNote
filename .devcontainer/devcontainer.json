@@ -1,0 +1,32 @@
+{
+  "name": "DeskNote Dev (Tauri v2 + Svelte)",
+  "image": "mcr.microsoft.com/devcontainers/rust:1-bullseye",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rust-lang.rust-analyzer",
+        "tauri-apps.tauri-vscode",
+        "svelte.svelte-vscode",
+        "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode",
+        "usernamehw.errorlens"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "[rust]": {
+          "editor.defaultFormatter": "rust-lang.rust-analyzer"
+        },
+        "rust-analyzer.checkOnSave.command": "clippy"
+      }
+    }
+  },
+  "forwardPorts": [5173],
+  "remoteUser": "vscode"
+}
