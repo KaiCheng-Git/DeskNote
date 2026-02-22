@@ -66,6 +66,9 @@ input, textarea {
   font-family: var(--font);
   font-size: 13px;
   resize: none;
+  /* Allow text selection and right-click context menu in editable fields */
+  user-select: text;
+  -webkit-user-select: text;
 }
 
 input::placeholder, textarea::placeholder {
