@@ -39,6 +39,9 @@ fn send_to_desktop(window: tauri::WebviewWindow) {
             windows_platform::send_to_desktop(hwnd);
         }
     }
+    // On non-Windows, the window parameter is intentionally unused
+    #[cfg(not(target_os = "windows"))]
+    drop(window);
 }
 
 /// Re-apply desktop position when window loses focus
@@ -63,6 +66,9 @@ fn on_focus_lost(window: tauri::WebviewWindow) {
             }
         }
     }
+    // On non-Windows, the window parameter is intentionally unused
+    #[cfg(not(target_os = "windows"))]
+    drop(window);
 }
 
 pub fn run() {
@@ -87,6 +93,9 @@ pub fn run() {
                 use window_vibrancy::apply_mica;
                 apply_mica(&window, Some(true)).ok();
             }
+            // On non-Windows, window is not used after this point
+            #[cfg(not(target_os = "windows"))]
+            drop(window);
 
             // System tray: click to show/hide window
             let tray = tauri::tray::TrayIconBuilder::new()
