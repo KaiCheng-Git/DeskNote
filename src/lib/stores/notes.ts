@@ -1,5 +1,5 @@
 import { writable } from "svelte/store";
-import { getDb, newId, now } from "../db";
+import { getDb, newId, now, LIMITS, validateLength } from "../db";
 
 export interface Note {
   id: string;
@@ -43,6 +43,8 @@ export async function createNote() {
 }
 
 export async function updateNote(id: string, title: string, content: string) {
+  validateLength(title, LIMITS.NOTE_TITLE, "Note title");
+  validateLength(content, LIMITS.NOTE_CONTENT, "Note content");
   const db = await getDb();
   const ts = now();
   await db.execute(

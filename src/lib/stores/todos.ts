@@ -1,5 +1,5 @@
 import { writable } from "svelte/store";
-import { getDb, newId, now } from "../db";
+import { getDb, newId, now, LIMITS, validateLength } from "../db";
 
 export interface Todo {
   id: string;
@@ -20,11 +20,13 @@ export async function loadTodos() {
 }
 
 export async function addTodo(content: string) {
-  if (!content.trim()) return;
+  const trimmed = content.trim();
+  if (!trimmed) return;
+  validateLength(trimmed, LIMITS.TODO_CONTENT, "Todo");
   const db = await getDb();
   const todo: Todo = {
     id: newId(),
-    content: content.trim(),
+    content: trimmed,
     is_done: false,
     priority: 0,
     created_at: now(),
