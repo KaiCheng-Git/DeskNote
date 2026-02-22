@@ -107,6 +107,10 @@ jobs:
       - name: Install frontend dependencies
         run: npm ci
 
+      - name: Generate Cargo.lock (if not committed)
+        working-directory: src-tauri
+        run: cargo generate-lockfile
+
       - name: Rust dependency security audit
         working-directory: src-tauri
         run: cargo audit
