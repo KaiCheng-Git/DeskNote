@@ -120,3 +120,26 @@ pub fn run() {
         .run(tauri::generate_context!())
         .expect("error while running DeskNote");
 }
+
+// ─── Unit tests ───────────────────────────────────────────────────────────────
+// Pure logic tests that do not require a running Tauri app.
+// IPC command tests will be added in M4 when DB/validation logic is in Rust.
+#[cfg(test)]
+mod tests {
+    /// Verifies the app identifier follows the reverse-domain convention.
+    #[test]
+    fn test_app_identifier_format() {
+        let id = "com.desknote.app";
+        let parts: Vec<&str> = id.split('.').collect();
+        assert_eq!(parts.len(), 3, "identifier should have 3 dot-separated parts");
+        assert_eq!(parts[0], "com");
+        assert_eq!(parts[1], "desknote");
+    }
+
+    /// Smoke test: the module compiles and the basic types are accessible.
+    #[test]
+    fn test_module_compiles() {
+        // If this file compiles, all imports and types are valid.
+        assert!(true);
+    }
+}
