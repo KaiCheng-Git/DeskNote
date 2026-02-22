@@ -1,0 +1,45 @@
+version: 2
+updates:
+  # npm (frontend)
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Shanghai"
+    open-pull-requests-limit: 5
+    groups:
+      tauri-frontend:
+        patterns:
+          - "@tauri-apps/*"
+      svelte:
+        patterns:
+          - "@sveltejs/*"
+          - "svelte"
+      test-tooling:
+        patterns:
+          - "vitest"
+          - "@vitest/*"
+          - "playwright"
+          - "@playwright/*"
+          - "svelte-check"
+
+  # Cargo (Rust backend)
+  - package-ecosystem: "cargo"
+    directory: "/src-tauri"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Shanghai"
+    open-pull-requests-limit: 5
+    groups:
+      tauri:
+        patterns:
+          - "tauri"
+          - "tauri-*"
+      windows-api:
+        patterns:
+          - "windows"
+          - "window-vibrancy"
