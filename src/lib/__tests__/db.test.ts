@@ -13,7 +13,7 @@ vi.mock("@tauri-apps/plugin-sql", () => ({
   },
 }));
 
-import { LIMITS, validateLength, newId, now } from "$lib/db";
+import { LIMITS, validateLength, newId, now, DB_VERSION } from "$lib/db";
 
 // ─── LIMITS ────────────────────────────────────────────────────────────────
 
@@ -99,5 +99,18 @@ describe("now", () => {
     const after = Date.now();
     expect(ts).toBeGreaterThanOrEqual(before);
     expect(ts).toBeLessThanOrEqual(after);
+  });
+});
+
+// ─── DB_VERSION ─────────────────────────────────────────────────────────────
+
+describe("DB_VERSION", () => {
+  it("is a positive integer", () => {
+    expect(Number.isInteger(DB_VERSION)).toBe(true);
+    expect(DB_VERSION).toBeGreaterThan(0);
+  });
+
+  it("is currently 2 (v1: initial schema, v2: done_at + archive table)", () => {
+    expect(DB_VERSION).toBe(2);
   });
 });

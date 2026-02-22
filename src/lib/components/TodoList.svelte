@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import {
     todos,
+    archivedCount,
     loadTodos,
     addTodo,
     toggleTodo,
@@ -93,6 +94,10 @@
       </div>
     {/if}
   </div>
+
+  {#if $archivedCount > 0}
+    <p class="archived-hint">已自动归档 {$archivedCount} 项（完成满 30 天）</p>
+  {/if}
 </div>
 
 <style>
@@ -236,5 +241,14 @@
     display: block;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+  }
+
+  .archived-hint {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 4px 12px 8px;
+    border-top: 1px solid var(--border);
+    margin: 0;
   }
 </style>

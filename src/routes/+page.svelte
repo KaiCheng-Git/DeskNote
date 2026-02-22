@@ -6,6 +6,7 @@
   import WorkLogCard from "$lib/components/WorkLogCard.svelte";
   import SettingsPanel from "$lib/components/SettingsPanel.svelte";
   import { cardCollapsed, saveCardCollapsed, loadSettings } from "$lib/stores/settings";
+  import { vacuumDb } from "$lib/db";
   import { notes, createNote } from "$lib/stores/notes";
   import { todos } from "$lib/stores/todos";
   import { onMount, onDestroy } from "svelte";
@@ -16,6 +17,7 @@
 
   onMount(async () => {
     await loadSettings();
+    vacuumDb().catch(() => {}); // background maintenance — ignore errors
     const appWindow = getCurrentWindow();
     unlisten = await appWindow.listen("tauri://blur", async () => {
       await invoke("on_focus_lost");
