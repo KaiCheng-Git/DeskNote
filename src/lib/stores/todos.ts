@@ -40,17 +40,22 @@ export async function addTodo(content: string) {
 
 export async function toggleTodo(id: string) {
   const db = await getDb();
+  // Capture new state from synchronous store update, then await the DB write
+  let newDone: boolean | undefined;
   todos.update((list) => {
     const todo = list.find((t) => t.id === id);
     if (todo) {
       todo.is_done = !todo.is_done;
-      db.execute("UPDATE todos SET is_done = ? WHERE id = ?", [
-        todo.is_done ? 1 : 0,
-        id,
-      ]);
+      newDone = todo.is_done;
     }
     return [...list];
   });
+  if (newDone !== undefined) {
+    await db.execute("UPDATE todos SET is_done = ? WHERE id = ?", [
+      newDone ? 1 : 0,
+      id,
+    ]);
+  }
 }
 
 export async function deleteTodo(id: string) {

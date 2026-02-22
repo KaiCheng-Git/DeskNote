@@ -1,9 +1,7 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import { opacity, desktopMode, loadSettings, saveOpacity, saveDesktopMode } from "../stores/settings";
+  import { opacity, desktopMode, saveOpacity, saveDesktopMode } from "../stores/settings";
   import { invoke } from "@tauri-apps/api/core";
-
-  onMount(loadSettings);
+  // loadSettings is called once in +page.svelte onMount; no need to repeat here
 
   async function handleOpacityChange(e: Event) {
     const val = parseFloat((e.target as HTMLInputElement).value);

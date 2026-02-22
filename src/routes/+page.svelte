@@ -8,16 +8,22 @@
   import { cardCollapsed, saveCardCollapsed, loadSettings } from "$lib/stores/settings";
   import { notes, createNote } from "$lib/stores/notes";
   import { todos } from "$lib/stores/todos";
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
   import { invoke } from "@tauri-apps/api/core";
   import { getCurrentWindow } from "@tauri-apps/api/window";
+
+  let unlisten: (() => void) | undefined;
 
   onMount(async () => {
     await loadSettings();
     const appWindow = getCurrentWindow();
-    appWindow.listen("tauri://blur", async () => {
+    unlisten = await appWindow.listen("tauri://blur", async () => {
       await invoke("on_focus_lost");
     });
+  });
+
+  onDestroy(() => {
+    unlisten?.();
   });
 
   function toggleCard(id: string) {

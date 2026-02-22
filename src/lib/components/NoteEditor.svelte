@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
   import {
     notes,
     activeNoteId,
@@ -15,10 +15,12 @@
 
   onMount(loadNotes);
 
-  // Sync to active note
+  // Sync to active note — cancel any pending save first to prevent
+  // a scheduled save from writing to the wrong note after switching
   $effect(() => {
     const id = $activeNoteId;
     const note = $notes.find((n) => n.id === id);
+    clearTimeout(saveTimeout);
     if (note) {
       title = note.title;
       content = note.content;
@@ -30,9 +32,13 @@
 
   function scheduleSave() {
     clearTimeout(saveTimeout);
-    saveTimeout = setTimeout(() => {
+    saveTimeout = setTimeout(async () => {
       if ($activeNoteId) {
-        updateNote($activeNoteId, title, content);
+        try {
+          await updateNote($activeNoteId, title, content);
+        } catch {
+          // Validation or DB error — surfaced in M4 error handling milestone
+        }
       }
     }, 500);
   }
@@ -63,12 +69,21 @@
       content = content ? content + "\n" + text : text;
       scheduleSave();
     };
+    recognition.onerror = () => {
+      isListening = false;
+    };
     recognition.onend = () => {
       isListening = false;
     };
     recognition.start();
     isListening = true;
   }
+
+  // Clean up on component destroy: cancel pending save + stop any active recognition
+  onDestroy(() => {
+    clearTimeout(saveTimeout);
+    recognition?.abort();
+  });
 </script>
 
 <div class="notes-panel">
